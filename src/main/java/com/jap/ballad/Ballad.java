@@ -2,12 +2,24 @@ package com.jap.ballad;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Ballad {
-    public void writePoemToAFile(String fileName, String data){
-
+    public void writePoemToAFile(String fileName, String data)
+    {
+        FileOutputStream fileOutputStream = null;
+        try{
+            fileOutputStream = new FileOutputStream(fileName);
+            for (int i = 0; i < data.length(); i++) {
+                char value = data.charAt(i);
+                fileOutputStream.write(value);
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
-
     public static void main(String[] args) {
 
         String ballad = "'Twas the night before Christmas, when all through the house\n" +
@@ -25,5 +37,10 @@ public class Ballad {
                 "Away to the window I flew like a flash,\n" +
                 "Tore open the shutters and threw up the sash.\n";
         // Call the function and write the ballad to the file
+
+        Ballad balladObj = new Ballad();
+        String fileName = "src/main/resources/ballad.txt";
+        balladObj.writePoemToAFile(fileName,ballad);
+
     }
 }
